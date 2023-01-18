@@ -87,7 +87,7 @@ export default function LotteryEntrance() {
         <div>
             Hi from lottery entrance!
             {raffleAddress ? (
-                <div>
+                <div className="">
                     <button
                         onClick={async function () {
                             await enterRaffle({
