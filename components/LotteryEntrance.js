@@ -4,7 +4,9 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { abi, contractAddresses } from "../constants"
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
+// component library gives us code that's already formatted for us - for example includes button:
 import { useNotification } from "web3uikit"
+
 
 export default function LotteryEntrance() {
     const { chainId: chainIdHex, isWeb3Enabled, Moralis } = useMoralis()
