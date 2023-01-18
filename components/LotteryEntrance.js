@@ -38,6 +38,10 @@ export default function LotteryEntrance() {
         params: {},
     })
 
+    // cd to hardhat-smartcontract-lottery
+    // spin up node
+    // create another terminal and run this command:
+    // yarn hardhat run scripts/mockOffchain.js --network localhost
     const { runContractFunction: getRecentWinner } = useWeb3Contract({
         abi: abi,
         contractAddress: raffleAddress,
