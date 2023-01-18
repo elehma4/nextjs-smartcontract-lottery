@@ -4,6 +4,7 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { abi, contractAddresses } from "../constants"
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
+import { useNotification } from "web3uikit"
 
 export default function LotteryEntrance() {
     const { chainId: chainIdHex, isWeb3Enabled, Moralis } = useMoralis()
@@ -11,17 +12,20 @@ export default function LotteryEntrance() {
     const raffleAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
     const [entranceFee, setEntranceFee] = useState("0")
 
-    // const {runContractFunction: enterRaffle } = useWeb3Contract({
-    //     abi: abi,
-    //     contractAddress: raffleAddress,
-    //     functionName:"enterRaffle",
-    //     params: {},
-    // })
+    const dispatch = useNotification()
+
+    const { runContractFunction: enterRaffle } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "enterRaffle",
+        params: {},
+        msgValue: entranceFee,
+    })
 
     const { runContractFunction: getEntranceFee } = useWeb3Contract({
         abi: abi,
         contractAddress: raffleAddress,
-        functionName: "enterRaffle",
+        functionName: "getEntranceFee",
         params: {},
     })
 
@@ -29,7 +33,7 @@ export default function LotteryEntrance() {
         if (isWeb3Enabled) {
             async function updateUI() {
                 const entranceFeeFromCall = (await getEntranceFee()).toString()
-                setEntranceFee(ethers.utils.formatUnits(entranceFeeFromCall, "ether"))
+                setEntranceFee(entranceFeeFromCall)
             }
             updateUI()
         }
@@ -37,7 +41,24 @@ export default function LotteryEntrance() {
 
     return (
         <div>
-            Hi from lottery entrance!<div>Entrance Fee: {entranceFee} ETH</div>
+            Hi from lottery entrance!
+            {raffleAddress ? (
+                <div>
+                    <button
+                        onClick={async function () {
+                            await enterRaffle({
+                                onSuccess: handleSuccess,
+                                onError: (error) => console.log(error),
+                            })
+                        }}
+                    >
+                        Enter Raffle
+                    </button>
+                    Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH
+                </div>
+            ) : (
+                <div>No Raffle Address Detected</div>
+            )}
         </div>
     )
 }
