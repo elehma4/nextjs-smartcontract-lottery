@@ -1,6 +1,28 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## NextJS Smart Contract Lottery Recap
+
+Built full-stack application using NextJS 
+
+Used React to combine Javascript and HTML for a basic front-end & smoother dev experience
+
 For css styling use: https://tailwindcss.com/docs
+
+App.js is the entry point for our entire application
+
+We use <MoralisProvider> so we don't have to pass parameters between our components
+This is also used for calling different contract functions - sending txs and calling data
+
+source: https://github.com/MoralisWeb3/react-moralis 
+
+We also use <web3uikit> to create our header vs. manually coding
+
+source: https://github.com/web3ui/web3uikit 
+
+Deployment:
+Code is deployed directly to IPFS using fleek.co - by calling our github repository
+
 
 ## Getting Started
 
